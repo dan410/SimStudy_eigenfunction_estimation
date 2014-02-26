@@ -4,7 +4,7 @@
 library(ssfcov2)
 library(sfdasim)
 library(ggplot2)
-source('run-simulations.R')
+source('run-sims.R')
 source('L2norm.R')
 
 # set the working directory
