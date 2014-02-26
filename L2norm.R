@@ -1,4 +1,5 @@
 
+#' Compute the L2 norm between to functions
 
 L2norm1 <- function(obj){
 
