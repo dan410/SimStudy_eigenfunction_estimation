@@ -8,7 +8,7 @@ source('run-sims.R')
 source('L2norm.R')
 
 # set the working directory
-setwd(dir = "/Users/dan410/Google Drive/Research/Projects/Simulation_Studies/SimStudy_eigenfunction_estimation")
+setwd(dir = "/Users/dan410/Google Drive/Research/Projects/SimStudy_eigenfunction_estimation")
 # set the parameters
 paramsfile = "params-dep-1.rds"
 params <- readRDS(file = paste('params/', paramsfile, sep=""))
