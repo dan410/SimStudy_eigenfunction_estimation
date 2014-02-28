@@ -1,0 +1,5 @@
+List of TODO's for this project
+
+2/27/14
+- implement pcafd method for eigenfunciton estimation and use the output to calculate L2 norms, as you've done with the smoothing spline method. The pcafd method is going ot be used as a 'benchmark' method in the disseration in order to compare the performance of the smoothing spline method. 
+
