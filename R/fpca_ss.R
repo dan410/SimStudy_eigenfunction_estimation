@@ -2,18 +2,13 @@
 #' 
 #' Estimates principal component functions by computing eigenfunctions of the covariance function
 #' 
-#' @param dat functional data set
-#' @param n.marginal.knots number of knot locations to use on the marginal domain. The number of knot locations actually used in estimation will be n^2 on the product domain.
+#' @param dat functional data set that can be passed to \code{ssfcov2::estimate_cov_function()}. See documentation for details.
+#' @param n.marginal.knots number of knot locations to use on the marginal domain. The number of knot locations actually used in estimation will be n^2 on the product domain. Default is 5.
 #' @return list containing first two principal component functions
-fpca_ss <- function(dat, n.marginal.knots = 5){
-  ##### estimating eigenfunctions ####
-  df <- ldply(dat, function(x){x})
-    
-  EIG <- dlply(df, .variables=c("m","sigma0"), function(x){
-    cov.est <- estimate_cov_function(x, n.marginal.knots = n.marginal.knots)
-    eig.est <- estimate_eigenfunctions
-    vals <- eig.est$values
-    return(list(eig.est = eig.est))
-  })
-  return(EIG)
+fpca_ss <- function(dat, n.marginal.knots = 5){ 
+  cov.est <- estimate_cov_function(dat, n.marginal.knots = n.marginal.knots)
+  eig.est <- estimate_eigenfunctions(cov.est)
+  fpc1 <- extract_pcf(nharm = 1, method = 'ss', eig.est)
+  fpc2 <- extract_pcf(nharm = 1, method = 'ss', eig.est)
+  return(list(fpc1 = fpc1, fpc2 = fpc2))
 }

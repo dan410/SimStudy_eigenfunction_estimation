@@ -1,17 +1,23 @@
-fpca_fda <- function(dat, nbasis=7){
+#' Estimates principal component functions 
+#' 
+#' Estimates principal component functions
+#' 
+#' @param dat data frame containing a functional data set in the format of the output of \code{sim_data()}
+#' @param ... arguments passed to the \code{create.?.basis(...)} function
+#' @return list containing first two principal component functions
+
+fpca_fda <- function(dat, ...){
 
 ### reformat data so that it is suitable for creating funcitonal data object
-mybasis <- create.fourier.basis(rangeval = c(0,1), nbasis = nbasis)
 argvals <- matrix(dat$Time, nrow = dat$m[1], byrow=FALSE)
 y <- matrix(dat$X, nrow = dat$m[1], byrow = FALSE)
 
 ### compute smoothed estimates of the curves using regression smoothing
+mybasis <- create.fourier.basis(rangeval = c(0,1), nbasis = nbasis)
 datfd <- smooth.basis(argvals = argvals, y = y, fdParobj = mybasis)$fd
-#plot(datfd)
 
 ### compute eigenfunctions using fda package funcitons
 dat.pca <- pca.fd(datfd, nharm = 2, centerfns = FALSE) # not centering functions
-# plot.pca.fd(dat.pca)
 
 fpc1 <- extract_pcf(dat.pca, nharm=1)
 fpc2 <- extract_pcf(dat.pca, nharm=2)
