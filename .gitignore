@@ -8,6 +8,7 @@
 *~
 .Rapp*
 .Rhistory
+.RData
 
 # RStudio Project files
 .Rproj.user
