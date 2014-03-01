@@ -1,12 +1,19 @@
 
 
 # load required packages 
+cat("loading R packages \n")
 library(ssfcov2)
 library(sfdasim)
 library(ggplot2)
 library(fda)
+library(TeachingDemos) # I use char2seed() function to set the RNG
 
 # source required functions
-source('R/run-sims.R')
-source('R/run-sims-pcafd.R')
-source('R/L2norm.R')
+path = "./R"
+cat( paste("loading functions in folder", path))
+for (nm in list.files("./R", pattern = "\\.[Rr]$")) {
+  source(file.path(path, nm))
+}
+#source('R/norm_L2.R')
+#source('R/sim_data.R')
+#source('R/fpca_ss.R')

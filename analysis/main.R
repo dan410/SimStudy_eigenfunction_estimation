@@ -6,42 +6,36 @@
 source("libraries/libs.R")
 
 # Specify the parameter file to use. These files are in the params folder.
-paramsfile = "params-dep-1.rds"
-params <- readRDS(file = paste('params/', paramsfile, sep=""))
+paramsfile = "params-ind-1.rds"
+params <- readRDS(file = paste('analysis/params/', paramsfile, sep=""))
 
-# Run simulations using the specified parameters
-results <- run_sims(n.iter = 30, m = params$m, levels.m = params$levels.m, type = params$type, basis.pars = params$basis.pars, sigma0 = params$sigma0, rand.obs = params$rand.obs, n.dim = params$n.dim, n.marginal.knots = params$n.marginal.knots, cov.model = params$cov.model, cov.pars = params$cov.pars, locs = params$locs)$results
+# Set the seed for the Random Number Generator for reproducible results
+# char2seed('fortin')
 
-# Save results to the results folder
-saveRDS(results, file = paste('results/results-', paramsfile, sep=""))
+# How many data sets do you want to use?
+n.data.sets <- 3
 
-# Read in results object
-results <- readRDS(file = paste('results/results-', paramsfile, sep=""))
+# Generate the data sets using the specified parameter values
+SIMDAT <- sim_data(n=n.data.sets, params=params)
 
-#########################
-# To measure performance, compute L2 norm of difference between estimated and true EFs
-#########################
-n.iter = 30
-ef1 <- numeric(n.iter)
-ef2 <- numeric(n.iter)
-for( i in 1:n.iter){
-    ef1[i] <- L2norm1(results[[i]][[2]]$eig.est)
-    ef2[i] <- L2norm2(results[[i]][[2]]$eig.est)
+# Estimate the principal component functions for each data set and sore them in a list
+### using smoothing spline method ###
+EIG.EST <- list() #initialize empty list
+for(i in 1:n.data.sets){
+  EIG.EST[[i]] <- fpca_ss(dat=SIMDAT[[i]], n.marginal.knots=5)
 }
-# Summary statistics
-mean(ef1)
-sd(ef1)
-mean(ef2)
-sd(ef2)
-        
-# Include code to plot results and compute tabulated values
-########## plot all FPCs on one plot ####################
 
-fpc.df <- rbind(fpc1.df, fpc2.df)
-fpc.df$m <- factor(fpc.df$m, levels=levels.m)
+saveRDS(EIG.EST, file = paste("analysis/results/fpca-ss-", "paramsfile"))
+ 
+################### FDA Package using pca.fd() ############
+EIG.EST <- list()
+for(i in 1:n.data.sets){
+  EIG.EST[[i]] <- fpca_fda(dat=SIMDAT[[i]][[2]], nbasis=7)
+}
+saveRDS(EIG.EST, file = paste("analysis/results/fpca-pcafd-", "paramsfile"))
 
-gg <- ggplot(fpc.df, aes(x=Time, y=X, group=m, col=m))	
-gg + geom_line() + facet_grid(FPC~sigma0, labeller=label_both)	+ theme_bw() + scale_color_hue()
+
+
 
 
 
