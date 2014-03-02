@@ -5,7 +5,6 @@
 #' @param dat data frame containing a functional data set in the format of the output of \code{sim_data()}
 #' @param ... arguments passed to the \code{create.?.basis(...)} function
 #' @return list containing first two principal component functions
-
 fpca_fda <- function(dat, ...){
 
 ### reformat data so that it is suitable for creating funcitonal data object

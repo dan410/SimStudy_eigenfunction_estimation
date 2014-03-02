@@ -10,29 +10,31 @@ paramsfile = "params-ind-1.rds"
 params <- readRDS(file = paste('analysis/params/', paramsfile, sep=""))
 
 # Set the seed for the Random Number Generator for reproducible results
-# char2seed('fortin')
+ char2seed('fortin')
 
 # How many data sets do you want to use?
-n.data.sets <- 3
+n.data.sets <- 30
 
 # Generate the data sets using the specified parameter values
 SIMDAT <- sim_data(n=n.data.sets, params=params)
 
 # Estimate the principal component functions for each data set and sore them in a list
 ### using smoothing spline method ###
-EIG.EST <- list() #initialize empty list
+FPC <- list() #initialize empty list
 for(i in 1:n.data.sets){
-  EIG.EST[[i]] <- fpca_ss(dat=SIMDAT[[i]], n.marginal.knots=5)
+  FPC[[i]] <- fpca2_ss(SIMDAT[[i]], n.marginal.knots=5)
 }
 
-saveRDS(EIG.EST, file = paste("analysis/results/fpca-ss-", "paramsfile"))
+saveRDS(FPC, file = paste("analysis/results/fpca-ss-", "paramsfile"))
+
+FPC.L2 <- ldply(FPC, .fun = fpca_L2norm)
  
 ################### FDA Package using pca.fd() ############
-EIG.EST <- list()
-for(i in 1:n.data.sets){
-  EIG.EST[[i]] <- fpca_fda(dat=SIMDAT[[i]][[2]], nbasis=7)
-}
-saveRDS(EIG.EST, file = paste("analysis/results/fpca-pcafd-", "paramsfile"))
+#EIG.EST <- list()
+#for(i in 1:n.data.sets){
+#  EIG.EST[[i]] <- fpca_fda(dat=SIMDAT[[i]][[2]], nbasis=7)
+#}
+#saveRDS(EIG.EST, file = paste("analysis/results/fpca-pcafd-", "paramsfile"))
 
 
 
