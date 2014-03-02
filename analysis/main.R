@@ -6,14 +6,14 @@
 source("libraries/libs.R")
 
 # Specify the parameter file to use. These files are in the params folder.
-paramsfile = "params-ind-1.rds"
+paramsfile = "params-dep-1.rds"
 params <- readRDS(file = paste('analysis/params/', paramsfile, sep=""))
 
 # Set the seed for the Random Number Generator for reproducible results
- char2seed('fortin')
+# char2seed('fortin')
 
 # How many data sets do you want to use?
-n.data.sets <- 30
+n.data.sets <- 50
 
 # Generate the data sets using the specified parameter values
 SIMDAT <- sim_data(n=n.data.sets, params=params)
@@ -25,7 +25,7 @@ for(i in 1:n.data.sets){
   FPC[[i]] <- fpca2_ss(SIMDAT[[i]], n.marginal.knots=5)
 }
 
-saveRDS(FPC, file = paste("analysis/results/fpca-ss-", "paramsfile"))
+saveRDS(FPC, file = paste("analysis/results/fpca-ss-", paramsfile, sep=""))
 
 FPC.L2 <- ldply(FPC, .fun = fpca_L2norm)
  
