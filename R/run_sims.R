@@ -3,9 +3,6 @@
 run_sims <- function(n.data.sets, paramsfile){
 # NOTE: set the current working directory to this project using setwd(dir = "")
 
-# load required packages and required functions
-source("libraries/libs.R")
-
 ### Specify the parameter file to use. These files are in the params folder.
 # paramsfile = "params-dep-1.rds"
 params <- readRDS(file = paste('analysis/params/', paramsfile, sep=""))
