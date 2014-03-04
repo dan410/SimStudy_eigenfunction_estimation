@@ -15,21 +15,29 @@ SIMDAT <- sim_data(n=n.data.sets, params=params)
 
 #### Estimate the principal component functions for each data set and sore them in a list
 ### using smoothing spline method ###
+n.marginal.knots <- 5
 FPC <- list() #initialize empty list
 for(i in 1:n.data.sets){
-  FPC[[i]] <- fpca2_ss(SIMDAT[[i]], n.marginal.knots=5)
+  FPC[[i]] <- fpca2_ss(SIMDAT[[i]], n.marginal.knots=n.marginal.knots)
 }
 
 saveRDS(FPC, file = paste("analysis/results/fpca-ss-", paramsfile, sep=""))
 
-# FPC.L2 <- ldply(FPC, .fun = fpca_L2norm)
  
 ################### FDA Package using pca.fd() ############
-#EIG.EST <- list()
-#for(i in 1:n.data.sets){
-#  EIG.EST[[i]] <- fpca_fda(dat=SIMDAT[[i]][[2]], nbasis=7)
-#}
-#saveRDS(EIG.EST, file = paste("analysis/results/fpca-pcafd-", "paramsfile"))
+
+### Here we use B-spline basis with breaks that depend on the number of knots used in the smoothing spline estimator
+rangeval <- c(0,1)
+breaks <- min(rangeval) + (max(rangeval) - min(rangeval)) * (1:n.marginal.knots)/(n.marginal.knots + 1)
+breaks <- c(rangeval[1], breaks, rangeval[2]) # first and last break point must be min/max range value
+
+### 
+FPC <- list()
+for(i in 1:n.data.sets){
+ FPC[[i]] <- fpca2_fda(dat=SIMDAT[[i]], rangeval = rangeval, norder = 4, breaks = breaks)
+}
+
+saveRDS(FPC, file = paste("analysis/results/fpca-fda-", paramsfile, sep=""))
 
 return(0)
 }

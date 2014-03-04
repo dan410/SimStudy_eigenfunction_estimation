@@ -3,7 +3,7 @@
 #' Estimates principal component functions
 #' 
 #' @param dat data frame containing a functional data set in the format of the output of \code{sim_data()}
-#' @param ... arguments passed to the \code{create.?.basis(...)} function
+#' @param ... arguments passed to the \code{create.bspline.basis()} function
 #' @return list containing first two principal component functions
 fpca_fda <- function(dat, ...){
 
@@ -12,7 +12,8 @@ argvals <- matrix(dat$Time, nrow = dat$m[1], byrow=FALSE)
 y <- matrix(dat$X, nrow = dat$m[1], byrow = FALSE)
 
 ### compute smoothed estimates of the curves using regression smoothing
-mybasis <- create.fourier.basis(rangeval = c(0,1), nbasis = nbasis)
+#mybasis <- create.fourier.basis(rangeval = c(0,1), nbasis = nbasis)
+create.bspline.basis(rangeval=rangeval, norder=norder, breaks=breaks)
 datfd <- smooth.basis(argvals = argvals, y = y, fdParobj = mybasis)$fd
 
 ### compute eigenfunctions using fda package funcitons
