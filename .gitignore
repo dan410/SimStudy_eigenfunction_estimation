@@ -5,8 +5,10 @@
 # For a project mostly in C, the following would be a good set of
 # exclude patterns (uncomment them if you want to use them):
 
-# Ignore the cache/ directory for this project
+# Ignore the following dirictories
 cache/
+figure/
+analysis/results/
 
 *.[oa]
 *~

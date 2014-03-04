@@ -14,6 +14,4 @@ cat( paste("loading functions in folder", path))
 for (nm in list.files("./R", pattern = "\\.[Rr]$")) {
   source(file.path(path, nm))
 }
-#source('R/norm_L2.R')
-#source('R/sim_data.R')
-#source('R/fpca_ss.R')
+
