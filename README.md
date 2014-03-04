@@ -21,7 +21,7 @@ Once `main.R` has been edited and saved. Type `make` into the terminal command l
 
 Loading packages that are not publicly available
 -----------------------------
-There are two required packages that are not publicly available (sfdasim, ssfcov2). These packages need to be saved to a folder that is included in your R search path. For example, I do not have install privileges on the Linux servers in the stat department, so I have saved the packages in the folder `/home/.../Rlibs` and added the line `.libPaths('/home/.../Rlibs')` to the file `/home/.Rprofile` on the stat department Linux server. 
+There are two required packages that are not publicly available (sfdasim, ssfcov2). These packages need to be saved to a folder whose path is included in your R search path. For example, I do not have install privileges on the Linux servers in the stat department, so I have saved the packages in the folder `/home/.../Rlibs` and added the line `.libPaths('/home/.../Rlibs')` to the file `/home/.Rprofile` on the stat department Linux server. 
 
 List of TODO's for this project
 ----------------------------------
