@@ -1,9 +1,0 @@
-List of TODO's for this project
-===============================
-
-2/28/14
-- Change basis functions in the simulations study to B-splines for the pca.fd() estimator. 
-
-- In the simulation study, include means as well as medians to see if there is an effect of a few outlying observations.
-
-

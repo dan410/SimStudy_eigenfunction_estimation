@@ -6,8 +6,8 @@
 # exclude patterns (uncomment them if you want to use them):
 
 # Ignore the following dirictories
-cache/
-figure/
+cache/*
+figure/*
 analysis/results/
 
 *.[oa]
