@@ -10,12 +10,13 @@ params <- readRDS(file = paste('analysis/params/', paramsfile, sep=""))
 ### How many data sets do you want to use?
 #n.data.sets <- 50
 
-### Generate the data sets using the specified parameter values
-SIMDAT <- sim_data(n=n.data.sets, params=params)
+ ### Generate the data sets using the specified parameter values
+ SIMDAT <- sim_data(n=n.data.sets, params=params)
+ 
+ #### Estimate the principal component functions for each data set and sore them in a list
+ ### using smoothing spline method ###
+ n.marginal.knots <- 7
 
-#### Estimate the principal component functions for each data set and sore them in a list
-### using smoothing spline method ###
-n.marginal.knots <- 5
 FPC <- list() #initialize empty list
 for(i in 1:n.data.sets){
   FPC[[i]] <- fpca2_ss(SIMDAT[[i]], n.marginal.knots=n.marginal.knots)
@@ -34,7 +35,7 @@ breaks <- c(rangeval[1], breaks, rangeval[2]) # first and last break point must 
 ### 
 FPC <- list()
 for(i in 1:n.data.sets){
- FPC[[i]] <- fpca2_fda(dat=SIMDAT[[i]], rangeval = rangeval, norder = 4, breaks = breaks)
+ FPC[[i]] <- fpca2_fda(sets=SIMDAT[[i]], rangeval = rangeval, norder = 4, nbasis=5)
 }
 
 saveRDS(FPC, file = paste("analysis/results/fpca-fda-", paramsfile, sep=""))

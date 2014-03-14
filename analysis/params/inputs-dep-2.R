@@ -1,5 +1,5 @@
 ######### DEFINE IN INPUTS ###########
-#' m 		 	# number of observations per curve
+#' m   	 	# number of observations per curve
 #' levels.m     # factor levels for m including "truth"
 #' type 	    # type of basis functions to use
 #' basis.pars	# this is the alpha value, which controls the smoothness of the process
@@ -10,23 +10,24 @@
 #' cov.pars     # parameters for each of the covariance functions specified in cov.model
 #' locs			# 2xn matrix with curve locations
 
-m <- c(5,10, 50) 	
-levels.m <- c("truth", "50", "10", "5")
+m <- c(20, 50) 	
+levels.m <- c("truth", "10", "50")
 type <- "Cos" 	    
 basis.pars <- 2	# this is the alpha value controlling smoothness of the process
-sigma0 <- c(0.0001, 0.15, 0.368, 0.50) 	
+sigma0 <- c(0.368) 	
 rand.obs <- TRUE 	
-n.dim <- 10 		
+n.dim <- 10 	
+n.marginal.knots <- 5	
 
 
 # specify the covariance model for each basis function. Must specify a covariance type for each basis function and the corresponding covariance parameters in cov.pars
 cov.model <- rep("exponential",n.dim)
-cov.pars=rbind(c(1,.5), c(1,0.3), c(1,0.0), c(1,0.0), c(1,0.0), c(1,0.0), c(1,0.0), c(1,0.0), c(1,0.0), c(1,0.0))
+cov.pars=rbind(c(1,.3), c(1,0.0), c(1,0.0), c(1,0.0), c(1,0.0), c(1,0.0), c(1,0.0), c(1,0.0), c(1,0.0), c(1,0.0))
 # specify locations to simulate curves. Must be a 2xn matrix 
-locs <- expand.grid(1:5/5, 1:10/10)
+locs <- expand.grid(1:5/5, 1:5/5)
 
+paramList <- list(m=m, levels.m=levels.m, type=type, basis.pars=basis.pars, sigma0=sigma0,
+                  rand.obs=rand.obs, n.dim=n.dim, n.marginal.knots=n.marginal.knots,
+                  cov.model=cov.model, cov.pars = cov.pars, locs=locs)
 
-file <- paste("inputs-dep-2.rds")
-save.results <- TRUE
-
-source("run-simulations.R")
+saveRDS(paramList, 'analysis/params/params-dep-2.rds')

@@ -9,13 +9,11 @@
 #' in the fda package.
 #' 
 #' @param nharm integer corresponding to the principal component function. nharm = 1 corresponds to the leadng principal component function.
-#' @param method string specifying method to use. Current options are "ss" and "pcafd".
+#' @param method string specifying method to use. Current options are "ss" and "fda".
 #' @param fit.obj fitted object from which PCFs can be derived
 #' @return the principal component function corresponding to nharm
-extract_pcf <- function(nharm, method = NULL, fit.obj = NULL){
-  if(is.null(method)) stop("method is not specified")
-  
-  if(method == "pcafd"){ # pca.fd() function in fda package
+extract_pcf <- function(nharm, method, fit.obj){
+  if(method == "fda"){ # pca.fd() function in fda package
     pcf <- function(x){eval.fd(x,  fit.obj[[1]])[, nharm]}
   }
   if(method == "ss"){ # estimate_eigenfunctions() function in ssfcov2 package

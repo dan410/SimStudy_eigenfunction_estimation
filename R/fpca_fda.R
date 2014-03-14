@@ -13,14 +13,15 @@ y <- matrix(dat$X, nrow = dat$m[1], byrow = FALSE)
 
 ### compute smoothed estimates of the curves using regression smoothing
 #mybasis <- create.fourier.basis(rangeval = c(0,1), nbasis = nbasis)
-create.bspline.basis(rangeval=rangeval, norder=norder, breaks=breaks)
+#create.bspline.basis(rangeval=rangeval, norder=norder, breaks=breaks)
+mybasis <- create.bspline.basis(...)
 datfd <- smooth.basis(argvals = argvals, y = y, fdParobj = mybasis)$fd
 
 ### compute eigenfunctions using fda package funcitons
 dat.pca <- pca.fd(datfd, nharm = 2, centerfns = FALSE) # not centering functions
 
-fpc1 <- extract_pcf(dat.pca, nharm=1)
-fpc2 <- extract_pcf(dat.pca, nharm=2)
+fpc1 <- extract_pcf(dat.pca, method = "fda", nharm=1)
+fpc2 <- extract_pcf(dat.pca, method = "fda", nharm=2)
 
 return(fpca = list(fpc1=fpc1, fpc2=fpc2))
 }
