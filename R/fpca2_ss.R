@@ -6,7 +6,6 @@
 #' @return list with each element a list containing the first two estimate FPCs
 fpca2_ss <- function(sets, n.marginal.knots=NULL, marginal.knots=NULL){
   df <- ldply(sets, function(x){x}) #converting list to data frame
-  
   FPC <- dlply(df, .variables=c("m","sigma0"), .fun = fpca_ss, n.marginal.knots=n.marginal.knots, marginal.knots=marginal.knots)
   return(FPC)
 }

@@ -7,7 +7,7 @@
 #' @param params parameter values specifying the data generating process
 #' @return list of functional data sets
 
-sim_data <- function(n, params){
+sim_data <- function(n, params, gap = FALSE, ...){
 
     obsPerCurve <- params$m  # creating a more descriptive name for number of observations per curve
     
@@ -26,6 +26,7 @@ sim_data <- function(n, params){
           dat$X <- dat.noErrorVar$X + rnorm(n=nrow(dat), sd = params$sigma0[j])
           dat$m <- obsPerCurve[i] 
           dat$sigma0 <- params$sigma0[j] 
+          if(gap){dat <- create_gap(dat, ...)}# creating gap of missing values in the data
           SIMDAT[[length(params$sigma0)*(i-1) + j]] <- dat	
         }                  
       }

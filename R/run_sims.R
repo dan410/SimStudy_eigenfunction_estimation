@@ -8,16 +8,18 @@ run_sims <- function(n.data.sets, paramsfile){
 params <- readRDS(file = paste('analysis/params/', paramsfile, sep=""))
 
 ### How many data sets do you want to use?
-#n.data.sets <- 50
+#n.data.sets <- 25
 
  ### Generate the data sets using the specified parameter values
- SIMDAT <- sim_data(n=n.data.sets, params=params)
- 
+ SIMDAT1 <- sim_data(n=n.data.sets, params=params, gap=TRUE, start=1, length=5)
+ SIMDAT2 <- sim_data(n=n.data.sets, params=params, gap=TRUE, start=1, length=5, beginning = FALSE)
+ SIMDAT <- c(SIMDAT1, SIMDAT2)
  #### Estimate the principal component functions for each data set and sore them in a list
  ### using smoothing spline method ###
- n.marginal.knots <- NULL
- eps <- 0.001
- marginal.knots <- seq(0+eps,1-eps, length=7)
+ n.marginal.knots <- 5
+ marginal.knots=NULL
+# eps <- 0.001
+# marginal.knots <- seq(0+eps,1-eps, length=7)
 
 FPC <- list() #initialize empty list
 for(i in 1:n.data.sets){
@@ -27,20 +29,20 @@ for(i in 1:n.data.sets){
 saveRDS(FPC, file = paste("analysis/results/fpca-ss-", paramsfile, sep=""))
 
  
-# ################### FDA Package using pca.fd() ############
-# 
-# ### Here we use B-spline basis with breaks that depend on the number of knots used in the smoothing spline estimator
-# rangeval <- c(0,1)
-# #breaks <- min(rangeval) + (max(rangeval) - min(rangeval)) * (1:n.marginal.knots)/(n.marginal.knots + 1)
-# #breaks <- c(rangeval[1], breaks, rangeval[2]) # first and last break point must be min/max range value
-# 
-# ### 
-# FPC <- list()
-# for(i in 1:n.data.sets){
-#  FPC[[i]] <- fpca2_fda(sets=SIMDAT[[i]], rangeval = rangeval, norder = 4, nbasis=5)
-# }
-# 
-# saveRDS(FPC, file = paste("analysis/results/fpca-fda-", paramsfile, sep=""))
+################### FDA Package using pca.fd() ############
+
+### Here we use B-spline basis with breaks that depend on the number of knots used in the smoothing spline estimator
+rangeval <- c(0,1)
+#breaks <- min(rangeval) + (max(rangeval) - min(rangeval)) * (1:n.marginal.knots)/(n.marginal.knots + 1)
+#breaks <- c(rangeval[1], breaks, rangeval[2]) # first and last break point must be min/max range value
+
+### 
+FPC <- list()
+for(i in 1:n.data.sets){
+ FPC[[i]] <- fpca2_fda(sets=SIMDAT[[i]], rangeval = rangeval, norder = 4, nbasis=5)
+}
+
+saveRDS(FPC, file = paste("analysis/results/fpca-fda-", paramsfile, sep=""))
 
 return(0)
 }
