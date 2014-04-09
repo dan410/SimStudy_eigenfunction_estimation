@@ -14,8 +14,8 @@ analysis/results/
 *~
 .Rapp*
 .Rhistory
-.RData
-.RData[Conflict]
+.RData*
+
 
 # RStudio Project files
 .Rproj.user
