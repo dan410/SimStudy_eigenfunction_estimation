@@ -1,13 +1,16 @@
 
 
 library(xtable)
-junk <- readRDS("analysis/results/fpca-fda-params-ind-3.rds")
-junk <- readRDS("analysis/results/fpca-ss-params-ind-3.rds")
-junk <- readRDS("cache/fpca-ss-params-ind-3.rds")
-junk <- readRDS("cache/fpca-fda-params-ind-3.rds")
+#junk <- readRDS("analysis/results/fpca-fda-params-ind-3.rds")
+#junk <- readRDS("analysis/results/fpca-ss-params-ind-3.rds")
+fit.ss <- readRDS("cache/fpca-ss-params-ind-3.rds")
+( res.ss <- L2_summary(fit.ss))
+fit.fda <- readRDS("cache/fpca-fda-params-ind-3.rds") 
+(res.fda <- L2_summary(fit.fda))
 
-(res <- L2_summary(junk))
-xtable(res,digits=3)
+xtable(res.ss,digits=3)
+xtable(res.fda, digits=3)
+
 rm(junk)
 
 
