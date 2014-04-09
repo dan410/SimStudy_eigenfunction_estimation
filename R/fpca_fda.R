@@ -8,12 +8,12 @@
 fpca_fda <- function(dat, ...){
 
 ### reformat data so that it is suitable for creating funcitonal data object
-# argvals <- matrix(dat$Time, nrow = dat$m[1], byrow=FALSE)
-# y <- matrix(dat$X, nrow = dat$m[1], byrow = FALSE)
+ argvals <- matrix(dat$Time, nrow = dat$m[1], byrow=FALSE)
+ y <- matrix(dat$X, nrow = dat$m[1], byrow = FALSE)
 
   ### CHANGE THIS!!!!! #####
-  argvals <- matrix(dat$Time, nrow = 15, byrow=FALSE)
-  y <- matrix(dat$X, nrow = 15, byrow = FALSE)
+  #argvals <- matrix(dat$Time, nrow = 15, byrow=FALSE)
+  #y <- matrix(dat$X, nrow = 15, byrow = FALSE)
   ### END CHANGE ###
 ### compute smoothed estimates of the curves using regression smoothing
 #mybasis <- create.fourier.basis(rangeval = c(0,1), nbasis = nbasis)
