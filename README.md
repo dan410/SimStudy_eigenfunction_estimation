@@ -27,6 +27,7 @@ TODO's for this project
 ----------------------------------
 
 - Change basis functions in the simulations study to B-splines for the pca.fd() estimator. 
+- silence the notifications from the sim_data() function
 
 
 
