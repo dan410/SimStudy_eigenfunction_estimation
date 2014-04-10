@@ -9,14 +9,13 @@
 L2_summary <- function(fpc, round.digits = 4){
    FPC.L2 <- ldply(fpc, .fun = fpca_L2norm)
    stopifnot(is.data.frame(FPC.L2))
+    
+   summary <- data.frame(median.PC1 = median(FPC.L2$L2fpc1),
+                         mean.PC1 = mean(FPC.L2$L2fpc1),
+                         se.PC1 = sd(FPC.L2$L2fpc1)/sqrt(length(FPC.L2$L2fpc1)),
+                         median.PC2 = median(FPC.L2$L2fpc2),
+                         mean.PC2 = mean(FPC.L2$L2fpc2),
+                         se.PC2 = sd(FPC.L2$L2fpc2)/sqrt(length(FPC.L2$L2fpc2)))
    
-   # use ddply "summarise" option to compute summary statistics
-   summary <- ddply(FPC.L2, .(m, sigma0), summarise,
-         median.PC1 = median(L2fpc1),
-         mean.PC1 = mean(L2fpc1),
-         se.PC1 = sd(L2fpc1)/sqrt(length(L2fpc1)),
-         median.PC2 = median(L2fpc2),
-         mean.PC2 = mean(L2fpc2),
-         se.PC2 = sd(L2fpc2)/sqrt(length(L2fpc2)))
    return(round(summary, digits = round.digits))
 }

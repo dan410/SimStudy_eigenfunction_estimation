@@ -5,8 +5,8 @@
 #' @param ... addition arguments passed to the \code{fda::create.bspline.basis() function}
 #' @return list with each element a list containing the first two estimate FPCs
 fpca2_fda <- function(sets, ...){
-  df <- ldply(sets, function(x){x}) #converting list to data frame
+  #df <- ldply(sets, function(x){x}) #converting list to data frame
   
-  FPC <- dlply(df, .variables=c("m","sigma0"), .fun = fpca_fda, ...)
+  FPC <- dlply(sets, .variables=c("m","sigma0"), .fun = fpca_fda, ...)
   return(FPC)
 }
