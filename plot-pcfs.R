@@ -2,7 +2,8 @@
 
 library(xtable)
 #junk <- readRDS("analysis/results/fpca-fda-params-ind-3.rds")
-#junk <- readRDS("analysis/results/fpca-ss-params-ind-3.rds")
+fit.ss <- readRDS("analysis/results/fpca-ss-params-ind-20.rds")
+fit.fda <- readRDS("analysis/results/fpca-fda-params-ind-20.rds")
 fit.ss <- readRDS("cache/fpca-ss-params-ind-3.rds")
 ( res.ss <- L2_summary(fit.ss))
 fit.fda <- readRDS("cache/fpca-fda-params-ind-3.rds") 
