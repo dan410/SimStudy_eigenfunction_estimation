@@ -27,15 +27,19 @@ Once `main.R` has been edited and saved. Type `make` into the terminal command l
 
 The `plot-pcfs.R` file contains code for plotting the estimated PCFs as well as computing summaries of the L2-based statistic.
 
+Estimating smoothing parameter for `fda` method
+-----------------------------
+The file `GCVfda.R` in the main project directory is used to choose an appropriate smoothing parameter when using the `fda` estimation method. Once an appropriate smoothing parameter is chosen, the file `fpca_fda.R` should be updated.  
+
 Loading packages that are not publicly available
 -----------------------------
 There are two required packages that are not publicly available (sfdasim, ssfcov2). These packages need to be saved to a folder whose path is included in your R search path. For example, I do not have install privileges on the Linux servers in the stat department, so I have saved the packages in the folder `/home/.../Rlibs` and added the line `.libPaths('/home/.../Rlibs')` to the file `/home/.Rprofile` on the stat department Linux server. 
 
 TODO's for this project
 ----------------------------------
-
-- Change basis functions in the simulations study to B-splines for the pca.fd() estimator. 
+ 
 - silence the notifications from the sim_data() function
+- allow the `fda` method to accept a smoothing parameter as an argument
 
 
 
