@@ -1,7 +1,7 @@
 Simulation Study of Eigenfunction Estimators
 ============================================
 
-This project investigates and compares eigenfunction estimators. The main focus is on the nonparametric estimator developed in my dissertation, but for comparison purposes other standard estimators are considered. Currently the only other estimator considered is one described in Functional Data Analysis (Ramsay and Silverman), and implemented by the function `pca.fd()` in the R package `fda`. Their method relies on finite basis representation of curves, thus a pre-packaged set of basis functions must be chosen. The current implementation uses a B-spline basis.
+This project investigates and compares eigenfunction estimators. The main focus is on the nonparametric estimator developed in my dissertation, but for comparison purposes other standard estimators are considered. Currently the only other estimator considered is one described in Functional Data Analysis (Ramsay and Silverman), and implemented by the function `pca.fd()` in the R package `fda`. Their method relies on finite basis representation of curves, thus a pre-packaged set of basis functions must be chosen. The current implementation uses a B-spline basis with the typical penelty based on the second derivative.
 
 The way we measure performance is by computing the (squared) L2-norm between the estimated eigenfunctions and true eigenfunctions $\int(est-truth)^2$. Only the first two eigenfunctions are use for comparison. 
 

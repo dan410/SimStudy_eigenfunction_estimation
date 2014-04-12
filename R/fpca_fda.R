@@ -31,7 +31,7 @@ basisobj = create.bspline.basis(c(0,1), nbasis)
 #  positive smoothing parameter for it to work.  Set up an object of
 #  class "fdPar" that penalizes the total squared second derivative,
 #  using a smoothing parameter that is set here to 10^(-4.5).
-lambda = 10^(-3.5) # found by minimizing GCV
+lambda = 10^(-2) # found by minimizing GCV
 fdParobj = fdPar(fdobj=basisobj, Lfdobj=2, lambda=lambda)
 #  Smooth the data, outputting a list containing various quantities
 datfd = smooth.basis(argvals, y, fdParobj)$fd

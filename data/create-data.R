@@ -1,5 +1,5 @@
 
-paramsfile = "params-ind-5.rds"
+paramsfile = "params-ind-50.rds"
 params <- readRDS(file = paste('analysis/params/', paramsfile, sep=""))
 
 ### How many data sets do you want to use?
