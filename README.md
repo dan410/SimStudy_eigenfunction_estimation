@@ -11,13 +11,21 @@ How to run a simulation
 
 This is accomplished by creating an 'input' file, which specifies the available input parameters (e.g. number of observations per curve, 'noise' standard deviation), stores them in a list and saves the list as an `.rds` file (see `analysis/params/inputs-ind-1.R` for an example). Both the input file and corresponding output object are saved in the `analysis/params/` folder. The naming convention used is for the R files specifying inputs to begin with "input" and the list object they create to begin with "params". Thus, when a file with the pattern `input-ZZZ.R` is run, it creates the object `params-ZZZ.rds`.
 
-### 2) Edit `main.R` to include desired simulation specifications
+### 2) Generate a collection of simulated data sets
 
-Simulations are run using the `run_sims()` function, which is called from within `main.R`. The file `main.R` `source()`s the required R packages as well as the `R/` folder which contains all the necessary R functions, then calls the function `run_sims()` with arguments that include the `params-ZZZ.rds` file and number of data sets to generate. There are some packages required that are not available on CRAN and need to be installed manually (see section on Loading Packages).
+Use `create_data.R` in the `data` folder to generate a collection of data sets. Here you specify the parameter file and the number of data sets to simulate. The resulting list of data sets is saved. This allows the results to be reproducible and guarantees that comparisons between competing methods use the same data for calculations. The saved data sets are in the data folder and use the same naming convention mentioned above.
 
-### 3) Run simulations by invoking the `Makefile`
+### 3) Edit `main.R` to include desired simulation specifications
+
+Simulations are run using the `run_calc()` function, which is called from within `main.R`. The file `main.R` `source()`s the required R packages as well as the `R/` folder which contains all the necessary R functions, then calls the function `run_calc()`. There are some packages required that are not available on CRAN and need to be installed manually (see section on Loading Packages).
+
+### 4) Run simulations by invoking the `Makefile`
 
 Once `main.R` has been edited and saved. Type `make` into the terminal command line (with the project directory set as the the current working directory) and the simulations will be run in BATCH mode with the results saved to the `analysis/results/` folder. The simulations are run using the `nohup` (no termination upon hangup). Open the `Makefile` to see the specific commands by typing `nano Makefile` in the command line.
+
+### 5) Summaries of results and plots of principal component functions
+
+The `plot-pcfs.R` file contains code for plotting the estimated PCFs as well as computing summaries of the L2-based statistic.
 
 Loading packages that are not publicly available
 -----------------------------
