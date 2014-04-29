@@ -7,7 +7,7 @@
 #' @param params parameter values specifying the data generating process
 #' @return list of functional data sets
 
-sim_data2 <- function(n, params, DIST = runif, ...){
+sim_data_gap <- function(n, params, length, DIST = runif, ...){
   
   obsPerCurve <- params$m  # creating a more descriptive name for number of observations per curve
   
@@ -20,7 +20,7 @@ sim_data2 <- function(n, params, DIST = runif, ...){
     # simulate data sets corresponding to the user specified number of observations per curve and error variance
     SIMDAT <- list() # initializing as a list object
     for (i in 1:length(obsPerCurve)){  
-      dat.noErrorVar <- sim_sfda_data_beta(locs=curves$locs, coef=curves$coef, basis.fns=curves$basis.fns, sigma0=0.000001, m = obsPerCurve[i]) 
+      dat.noErrorVar <- sim_sfda_data_gap(locs=curves$locs, coef=curves$coef, basis.fns=curves$basis.fns, sigma0=0.000001, m = obsPerCurve[i], length=length) 
       for (j in 1:length(params$sigma0)){                                         
         dat <- dat.noErrorVar
         dat$X <- dat.noErrorVar$X + rnorm(n=nrow(dat), sd = params$sigma0[j])

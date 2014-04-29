@@ -12,7 +12,7 @@
 #' @return locs spatial location of each curve
 #' @return Time argument values where curves are evaluated
 #' @return X response variable
-sim_sfda_data_beta <- function(locs, coef, basis.fns, sigma0, m, length){
+sim_sfda_data_gap <- function(locs, coef, basis.fns, sigma0, m, length){
   
   ncurve <- NROW(coef)
   nBasis <- NCOL(coef)
@@ -24,7 +24,7 @@ sim_sfda_data_beta <- function(locs, coef, basis.fns, sigma0, m, length){
   
   for(i in 1:ncurve){
     ts <- runif(m+length)
-    start = sample(1:(length(ts) - length+1), size=1)
+    start = sample(1:(length(ts) - length+1), size=1) # select random start postion for gap
     gap <- order(ts)[start:(start+length-1)]
     Time[ID==i] <- ts[-gap]
     ys <- NULL
