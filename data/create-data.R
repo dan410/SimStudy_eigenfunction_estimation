@@ -29,11 +29,7 @@ for(i in 1:n.data.sets){
   gapdat[[i]] <- SIMDAT[[i]][[1]]
 }
 
-gp <- ggplot(gapdat[[1]], aes(x=Time, y=X, group=ID))
-gp <- gp + geom_line()
-gp
-
-saveRDS(dat, file = paste("data/gapdata-", paramsfile, sep=""))
+saveRDS(gapdat, file = paste("data/gapdata-", paramsfile, sep=""))
 
 ##################################################################
 #### Using Beta distribution for the observation distribution ####
