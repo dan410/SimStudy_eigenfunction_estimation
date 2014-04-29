@@ -14,19 +14,26 @@ for(i in 1:n.data.sets){
 
 saveRDS(dat, file = paste("data/data-", paramsfile, sep=""))
 
-### Create gaps at random places ###
-dat <- readRDS("data/data-params-ind-67.rds")
-gapdat <- NULL
-for( i in 1:100){
-  gapdat[[i]] <- ddply(dat[[i]], .(ID), create_gap, start="random", length=17)
-}
+####################################
+### Create data with time gaps at random places ###
+paramsfile = "params-ind-50.rds"
+params <- readRDS(file = paste('analysis/params/', paramsfile, sep=""))
 
+### How many data sets do you want to use?
+n.data.sets <- 100
+
+### converting output frm sim_data to a list of data frames
+SIMDAT <- sim_data_gap(n = n.data.sets, params=params, length = 17)
+gapdat <- NULL
+for(i in 1:n.data.sets){
+  gapdat[[i]] <- SIMDAT[[i]][[1]]
+}
 
 gp <- ggplot(gapdat[[1]], aes(x=Time, y=X, group=ID))
 gp <- gp + geom_line()
 gp
 
-saveRDS(gapdat, file = "data/gapdata-params-ind-67.rds")
+saveRDS(dat, file = paste("data/gapdata-", paramsfile, sep=""))
 
 ##################################################################
 #### Using Beta distribution for the observation distribution ####
