@@ -33,10 +33,53 @@ fpc2 <- rbind(r4, r5, r6)
 fpc2 <- fpc2[, -c(1,4)]
 xtable(fpc2, digits = 4)
 
+fit.fda20.gap <- readRDS("cache/gap-fpca-fda-params-ind-20.rds")
+fit.ss20.gap <- readRDS("cache/gap-fpca-ss-params-ind-20.rds")
+
+(res.ss20 <- L2_summary(fit.ss20.gap))
+(res.fda20 <- L2_summary(fit.fda20.gap))
+
+fit.fda10.gap <- readRDS("cache/gap-fpca-fda-params-ind-10.rds")
+fit.ss10.gap <- readRDS("cache/gap-fpca-ss-params-ind-10.rds")
+
+(res.ss10 <- L2_summary(fit.ss10.gap))
+(res.fda10 <- L2_summary(fit.fda10.gap))
+
+### Beta distribution data
+
+fit.ss5 <- readRDS("cache/beta-fpca-ss-params-ind-5.rds")
+fit.ss10 <- readRDS("cache/beta-fpca-ss-params-ind-10.rds")
+fit.ss20 <- readRDS("cache/beta-fpca-ss-params-ind-20.rds")
+res.ss5 <- L2_summary(fit.ss5)
+res.ss10 <- L2_summary(fit.ss10)
+res.ss20 <- L2_summary(fit.ss20)
+
+fit.fda5 <- readRDS("cache/beta-fpca-fda-params-ind-5.rds")
+fit.fda10 <- readRDS("cache/beta-fpca-fda-params-ind-10.rds")
+fit.fda20 <- readRDS("cache/beta-fpca-fda-params-ind-20.rds")
+res.fda5 <- L2_summary(fit.fda5)
+res.fda10 <- L2_summary(fit.fda10)
+res.fda20 <- L2_summary(fit.fda20)
+
+r1 <- cbind(res.ss5[,1:3], res.fda5[,1:3])
+r2 <- cbind(res.ss10[,1:3], res.fda10[,1:3])
+r3 <- cbind(res.ss20[,1:3], res.fda20[,1:3])
+r4 <- cbind(res.ss5[,4:6], res.fda5[,4:6])
+r5 <- cbind(res.ss10[,4:6], res.fda10[,4:6])
+r6 <- cbind(res.ss20[,4:6], res.fda20[,4:6])
+
+fpc1 <- rbind(r1, r2, r3)
+fpc1 <- fpc1[,-c(1,4)]
+xtable(fpc1, digits = 4)
+
+fpc2 <- rbind(r4, r5, r6)
+fpc2 <- fpc2[, -c(1,4)]
+xtable(fpc2, digits = 4)
+
 ### plot principal component functions with pointwise confidence bands
-FPC <- readRDS("analysis/results/fpca-ss-params-ind-20.rds")
-FPC <- readRDS("cache/fpca-fda-params-ind-20.rds")
-file = "fpca-ss-params-ind-20"
+FPC <- readRDS("analysis/results/fpca-fda-params-ind-20.rds")
+FPC <- readRDS("cache/beta-fpca-fda-params-ind-20.rds")
+file = "beta-fpca-ss-params-ind-5"
 FPC <- readRDS(paste("cache/",file, ".rds" ,sep=""))
 # PC1
 n <- length(FPC)
@@ -79,6 +122,7 @@ ggp <- ggp + theme(axis.title.y = element_text(size = rel(1.2), angle = 90))
 ggp 
 
 ggsave(paste("figure/fpc2-", file, ".pdf", sep=""))
+
 
 
 

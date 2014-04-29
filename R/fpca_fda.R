@@ -8,8 +8,9 @@
 fpca_fda <- function(dat, ...){
 
 ### reformat data so that it is suitable for creating funcitonal data object
- argvals <- matrix(dat$Time, nrow = dat$m[1], byrow=FALSE)
- y <- matrix(dat$X, nrow = dat$m[1], byrow = FALSE)
+ nrow <- sum(dat$ID == 1)
+ argvals <- matrix(dat$Time, nrow = nrow, byrow=FALSE)
+ y <- matrix(dat$X, nrow = nrow, byrow = FALSE)
 
   ### CHANGE THIS!!!!! #####
   #argvals <- matrix(dat$Time, nrow = 15, byrow=FALSE)
@@ -31,7 +32,7 @@ basisobj = create.bspline.basis(c(0,1), nbasis)
 #  positive smoothing parameter for it to work.  Set up an object of
 #  class "fdPar" that penalizes the total squared second derivative,
 #  using a smoothing parameter that is set here to 10^(-4.5).
-lambda = 10^(-2) # found by minimizing GCV
+lambda = 10^(-3.75) # found by minimizing GCV
 fdParobj = fdPar(fdobj=basisobj, Lfdobj=2, lambda=lambda)
 #  Smooth the data, outputting a list containing various quantities
 datfd = smooth.basis(argvals, y, fdParobj)$fd

@@ -29,19 +29,19 @@ plotGCVRMSE.fd = function(lamlow, lamhi, lamdel, x, argvals, y,
     cat(format(round(loglamout[i,],3)))
     cat("\n")
   }
-  par(mfrow=c(3,1))
-  plot(loglamvec, loglamout[,2], type="b")
-  title("Degrees of freedom")
-  plot(loglamvec, loglamout[,3], type="b")
-  title("RMSE")
+  #par(mfrow=c(3,1))
+  #plot(loglamvec, loglamout[,2], type="b")
+  #title("Degrees of freedom")
+  #plot(loglamvec, loglamout[,3], type="b")
+  #title("RMSE")
   plot(loglamvec, loglamout[,4], type="b")
   title("Mean gcv")
   return(loglamout)
 }
 
-dat <- readRDS("data/data-params-ind-20.rds")
-argvals <- with(dat[[1]], subset(dat[[1]]$Time, ID==1))
-y <- with(dat[[1]], subset(dat[[1]]$X, ID==1))
+dat <- readRDS("data/data-params-ind-5.rds")
+argvals <- with(dat[[1]], subset(dat[[1]]$Time, ID==3))
+y <- with(dat[[1]], subset(dat[[1]]$X, ID==3))
 n = length(x)
 #  We now set up a basis system with a knot at every data point.
 #  The number of basis functions will equal the number of interior knots
@@ -53,7 +53,7 @@ basisobj = create.bspline.basis(c(0,1), nbasis)
 #  positive smoothing parameter for it to work.  Set up an object of
 #  class "fdPar" that penalizes the total squared second derivative,
 #  using a smoothing parameter that is set here to 10^(-4.5).
-lambda = 10^(-2.75)
+lambda = 10^(-2)
 fdParobj = fdPar(fdobj=basisobj, Lfdobj=2, lambda=lambda)
 #  Smooth the data, outputting a list containing various quantities
 smoothlist = smooth.basis(argvals, y, fdParobj)
@@ -65,4 +65,4 @@ points(argvals,y, pch="*")
 #  Repeat these analyses for a range of log10(lambda) values by running
 #  the function plotGCVRMSE that we defined above.
 
-loglamout = plotGCVRMSE.fd(-5, -2, 0.25, x, argvals, y, fdParobj)
+loglamout = plotGCVRMSE.fd(-5, -0.5, 0.25, x, argvals, y, fdParobj)
