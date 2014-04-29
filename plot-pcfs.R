@@ -79,7 +79,7 @@ xtable(fpc2, digits = 4)
 ### plot principal component functions with pointwise confidence bands
 FPC <- readRDS("analysis/results/fpca-fda-params-ind-20.rds")
 FPC <- readRDS("cache/beta-fpca-fda-params-ind-20.rds")
-file = "beta-fpca-ss-params-ind-5"
+file = "beta-fpca-fda-params-ind-10"
 FPC <- readRDS(paste("cache/",file, ".rds" ,sep=""))
 # PC1
 n <- length(FPC)
@@ -108,8 +108,9 @@ eval.mat <- matrix(0, nrow= n+1, ncol = length(eval.xs))
 eval.mat[1,] <- fpc2_true(eval.xs)
 for(i in 1:n){
   eval.mat[i+1,] <- FPC[[i]]$fpc2(eval.xs)
-  ### the following code forces the sign of the estimate PCF to match the true PCF
-  if(sign(eval.mat[1,500])*sign(eval.mat[i,500])<0) eval.mat[i,] <- -1*eval.mat[i,]
+  ### the following code forces the sign of the estimate PCF to match the true PCF by a simple check on the concavity of the estimate
+  ### logic: if the value near the end points is less than the valus near the center, then the concavity is incorrect
+  if((eval.mat[i,5] < eval.mat[i,500]) & (eval.mat[i,995] < eval.mat[i,500])) eval.mat[i,] <- -1*eval.mat[i,]
 }
 limits <- apply(eval.mat[-1,], 2, quantile, probs = c(0.025, .975))
 avg <- apply(eval.mat[-1,], 2, mean)
