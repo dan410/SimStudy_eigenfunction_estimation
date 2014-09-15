@@ -16,14 +16,15 @@ saveRDS(dat, file = paste("data/data-", paramsfile, sep=""))
 
 ####################################
 ### Create data with time gaps at random places ###
-paramsfile = "params-ind-50.rds"
+paramsfile = "params-ind-5.rds"
 params <- readRDS(file = paste('analysis/params/', paramsfile, sep=""))
-
+m <- params$m
+length <- ceiling(m/.75 - m) # this will generate data with approx 25% missing values
 ### How many data sets do you want to use?
 n.data.sets <- 100
 
 ### converting output frm sim_data to a list of data frames
-SIMDAT <- sim_data_gap(n = n.data.sets, params=params, length = 17)
+SIMDAT <- sim_data_gap(n = n.data.sets, params=params, length = length)
 gapdat <- NULL
 for(i in 1:n.data.sets){
   gapdat[[i]] <- SIMDAT[[i]][[1]]
